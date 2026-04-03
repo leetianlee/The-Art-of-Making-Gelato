@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Gelato Recipes">
+<title>The Art of Making Gelato</title>
+<style>
+  :root {
+    --cream: #fdf8f0;
+    --warm: #f5ede0;
+    --accent: #c0704a;
+    --accent-light: #e8957a;
+    --dark: #2d2010;
+    --mid: #7a5c3a;
+    --light-text: #a07850;
+    --border: #e5d8c8;
+    --green: #5a8a6a;
+    --shadow: 0 2px 12px rgba(45,32,16,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+
+  /* Header */
+  header {
+    background: var(--accent);
+    color: white;
+    padding: 18px 16px 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  header h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+  header p { font-size: 11px; opacity: 0.85; margin-top: 2px; }
+
+  /* Size Toggle */
+  .size-toggle {
+    display: flex;
+    background: white;
+    border-radius: 10px;
+    padding: 3px;
+    margin-top: 10px;
+    width: fit-content;
+  }
+  .size-toggle button {
+    border: none;
+    background: transparent;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.2s;
+    color: var(--accent);
+  }
+  .size-toggle button.active {
+    background: var(--accent);
+    color: white;
+  }
+
+  /* Search */
+  .search-bar {
+    padding: 12px 16px;
+    background: var(--warm);
+    border-bottom: 1px solid var(--border);
+  }
+  .search-bar input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 15px;
+    background: white;
+    outline: none;
+    color: var(--dark);
+  }
+  .search-bar input:focus { border-color: var(--accent-light); }
+  .search-bar input::placeholder { color: var(--light-text); }
+
+  /* Category Tabs */
+  .categories {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px 12px;
+    gap: 8px;
+    background: var(--warm);
+    border-bottom: 1px solid var(--border);
+    scrollbar-width: none;
+  }
+  .categories::-webkit-scrollbar { display: none; }
+  .cat-btn {
+    border: 1.5px solid var(--border);
+    background: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    color: var(--mid);
+    transition: all 0.2s;
+  }
+  .cat-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  /* Recipe List */
+  .recipe-list {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Recipe Card */
+  .recipe-card {
+    background: white;
+    border-radius: 14px;
+    border: 1.5px solid var(--border);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s;
+  }
+  .recipe-card:active { box-shadow: none; }
+  .recipe-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0,0,0,0.04);
+    gap: 12px;
+    user-select: none;
+  }
+  .recipe-icon {
+    font-size: 26px;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .recipe-title { flex: 1; }
+  .recipe-title h3 { font-size: 15px; font-weight: 700; color: var(--dark); }
+  .recipe-title p { font-size: 12px; color: var(--light-text); margin-top: 2px; }
+  .recipe-chevron {
+    color: var(--light-text);
+    font-size: 14px;
+    transition: transform 0.25s;
+  }
+  .recipe-card.open .recipe-chevron { transform: rotate(180deg); }
+
+  /* Category Badge */
+  .cat-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    display: inline-block;
+    margin-top: 3px;
+  }
+  .badge-traditional { background: #e8f0fe; color: #3a66cc; }
+  .badge-nuts { background: #fef3e2; color: #b06020; }
+  .badge-nontraditional { background: #e8f5e9; color: #2e7d52; }
+  .badge-sorbet { background: #f3e5f5; color: #7b3fa0; }
+
+  /* QA warning badge */
+  .qa-badge {
+    font-size: 10px;
+    background: #fff3cd;
+    color: #8a6400;
+    border: 1px solid #ffe08a;
+    padding: 2px 6px;
+    border-radius: 5px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* Recipe Body */
+  .recipe-body {
+    display: none;
+    padding: 0 16px 16px;
+    border-top: 1px solid var(--border);
+  }
+  .recipe-card.open .recipe-body { display: block; }
+
+  /* Ingredients Table */
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--light-text);
+    margin: 14px 0 8px;
+  }
+  .ing-table { width: 100%; border-collapse: collapse; }
+  .ing-table tr:not(:last-child) td { border-bottom: 1px solid var(--border); }
+  .ing-table td {
+    padding: 7px 0;
+    font-size: 13.5px;
+    vertical-align: top;
+    line-height: 1.4;
+  }
+  .ing-table td:first-child { color: var(--dark); padding-right: 10px; width: 55%; }
+  .ing-table td:last-child {
+    color: var(--accent);
+    font-weight: 700;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .ing-amount { display: block; }
+  .ing-amount.size-950 {}
+  .ing-amount.size-1500 { display: none; }
+  body.show-1500 .ing-amount.size-950 { display: none; }
+  body.show-1500 .ing-amount.size-1500 { display: block; }
+
+  /* Steps */
+  .steps-list { list-style: none; counter-reset: steps; }
+  .steps-list li {
+    counter-increment: steps;
+    display: flex;
+    gap: 10px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--dark);
+  }
+  .steps-list li:last-child { border-bottom: none; }
+  .steps-list li::before {
+    content: counter(steps);
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Tips */
+  .tip-box {
+    background: var(--warm);
+    border-left: 3px solid var(--accent-light);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 12px;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--mid);
+    line-height: 1.5;
+  }
+  .tip-box strong { color: var(--accent); }
+
+  /* QA note */
+  .qa-note {
+    background: #fffbe6;
+    border-left: 3px solid #f0c040;
+    border-radius: 0 8px 8px 0;
+    padding: 8px 12px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #7a5c00;
+    line-height: 1.5;
+  }
+
+  /* Serve time */
+  .serve-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 9px 12px;
+    background: var(--warm);
+    border-radius: 8px;
+    font-size: 12.5px;
+    color: var(--mid);
+  }
+  .serve-info .clock { font-size: 16px; }
+
+  /* No results */
+  .no-results {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--light-text);
+  }
+  .no-results .emoji { font-size: 40px; margin-bottom: 12px; }
+
+  /* Step guide link */
+  .guide-card {
+    margin: 0 14px 8px;
+    background: var(--accent);
+    border-radius: 14px;
+    padding: 14px 16px;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow);
+  }
+  .guide-card .guide-icon { font-size: 28px; }
+  .guide-card .guide-text h3 { color: white; font-size: 14px; font-weight: 700; }
+  .guide-card .guide-text p { color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 2px; }
+  .guide-card .guide-arrow { color: rgba(255,255,255,0.7); margin-left: auto; font-size: 16px; }
+
+  /* Guide modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    overflow-y: auto;
+  }
+  .modal-overlay.open { display: block; }
+  .modal {
+    background: white;
+    margin: 20px 12px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  .modal-header {
+    background: var(--accent);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .modal-header h2 { color: white; font-size: 16px; flex: 1; }
+  .modal-close {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-body { padding: 16px; }
+  .guide-step {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+  .guide-step:last-child { border-bottom: none; }
+  .guide-step-num {
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .guide-step-text strong { display: block; color: var(--accent); margin-bottom: 2px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🍦 The Art of Making Gelato</h1>
+  <p>Morano Gelato — All Recipes + QA Corrected</p>
+  <div class="size-toggle">
+    <button id="btn950" class="active" onclick="setSize(950)">950 mL</button>
+    <button id="btn1500" onclick="setSize(1500)">1.5 L</button>
+  </div>
+</header>
+
+<div class="search-bar">
+  <input type="search" id="searchInput" placeholder="Search recipes…" oninput="filterRecipes()" autocomplete="off" autocorrect="off" spellcheck="false">
+</div>
+
+<div class="categories" id="catBar">
+  <button class="cat-btn active" onclick="setCategory('all', this)">All</button>
+  <button class="cat-btn" onclick="setCategory('traditional', this)">Traditional</button>
+  <button class="cat-btn" onclick="setCategory('nuts', this)">Nut Flavours</button>
+  <button class="cat-btn" onclick="setCategory('nontraditional', this)">Nontraditional</button>
+  <button class="cat-btn" onclick="setCategory('sorbet', this)">Sorbets</button>
+</div>
+
+<div style="height:10px"></div>
+
+<!-- Guide Card -->
+<div class="guide-card" id="guideCard" onclick="toggleGuide()">
+  <div class="guide-icon">📋</div>
+  <div class="guide-text">
+    <h3>Step-by-Step Gelato Guide</h3>
+    <p>Universal method for every recipe</p>
+  </div>
+  <div class="guide-arrow">›</div>
+</div>
+
+<div class="recipe-list" id="recipeList"></div>
+<div class="no-results" id="noResults" style="display:none">
+  <div class="emoji">🍨</div>
+  <p>No recipes found</p>
+</div>
+
+<!-- Guide Modal -->
+<div class="modal-overlay" id="guideModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Universal Gelato Method</h2>
+      <button class="modal-close" onclick="toggleGuide()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:var(--warm);border-radius:10px;padding:12px;margin-bottom:12px;font-size:12.5px;color:var(--mid);line-height:1.5;">
+        <strong style="color:var(--accent);">Key notes:</strong> Measure by weight, not volume. Keep freezer at 2–4°F (−17 to −16°C). Ideal serving temp: 7–12°F (−14 to −11°C).
+      </div>
+      <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text"><strong>Dry ingredients</strong> Mix milk powder, sugar, and tapioca starch together in a large bowl.</div></div>
+      <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text"><strong>Add liquids</strong> Add cream, milk, and any other liquids. Whisk until fully incorporated.</div></div>
+      <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text"><strong>Add remaining</strong> Add corn syrup, egg yolks, extracts, nut pastes, or fruits. Whisk or blend with immersion blender.</div></div>
+      <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text"><strong>Cook</strong> Transfer to saucepan. Cook on medium-high, whisking continuously 8–10 min until thickened (coats back of spoon). Cook 15 sec more, then remove from heat immediately.</div></div>
+      <div class="guide-step"><div class="guide-step-num">5</div><div class="guide-step-text"><strong>Cool</strong> Pour into heatproof bowl, cover surface with plastic wrap. Rest 30–45 min, then refrigerate 4–12 hours until fully cold. <em>Quick method: ice bath 30–45 min.</em></div></div>
+      <div class="guide-step"><div class="guide-step-num">6</div><div class="guide-step-text"><strong>Churn</strong> Pour into gelato machine. Churn per manufacturer's directions, about 30–55 min.</div></div>
+      <div class="guide-step"><div class="guide-step-num">7</div><div class="guide-step-text"><strong>Freeze</strong> Scoop into container. Press plastic wrap directly onto gelato surface. Seal airtight. Freeze 4–6 hours minimum.</div></div>
+      <div class="guide-step"><div class="guide-step-num">8</div><div class="guide-step-text"><strong>Serve</strong> Remove from freezer and allow to soften per the recipe's indicated time before scooping.</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const RECIPES = [
+  {
+    id: 'corn',
+    icon: '🌽',
+    name: 'Corn Gelato',
+    italian: '',
+    category: 'traditional',
+    softenTime: '8–12 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '56g / 2.0 oz', s1500: '88g / 3.1 oz' },
+      { name: 'Granulated sugar', s950: '200g / 7.1 oz', s1500: '316g / 11.1 oz' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '192g / 6.8 oz', s1500: '303g / 10.7 oz' },
+      { name: 'Whole milk', s950: '685g / 24.2 oz', s1500: '1082g / 38.2 oz' },
+      { name: 'Light corn syrup', s950: '33g / 1.2 oz', s1500: '52g / 1.8 oz' },
+      { name: 'High-quality olive oil', s950: '35g / 1.2 oz', s1500: '55g / 1.9 oz' },
+    ],
+    steps: [
+      'Mix milk powder, sugar, and starch. Whisk in cream and milk, then corn syrup.',
+      'Cook on medium-high, whisking continuously, 8–10 min until thickened. Cook 15 sec more. Remove from heat.',
+      'Cool in bowl covered with plastic wrap (30–45 min), then refrigerate ~4 hours.',
+      'Churn 30–55 min. About halfway through, pour olive oil slowly into the spinning gelato.',
+      'Scoop, cover surface with plastic wrap, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Add olive oil mid-churn — pour slowly while the paddle incorporates it for a silky finish.'],
+  },
+  {
+    id: 'riso',
+    icon: '🍚',
+    name: 'Riso',
+    italian: 'Rice',
+    category: 'traditional',
+    softenTime: '10–12 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '56g / 2.0 oz', s1500: '88g / 3.1 oz' },
+      { name: 'Granulated sugar', s950: '180g / 6.3 oz', s1500: '284g / 10.0 oz' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '192g / 6.8 oz', s1500: '303g / 10.7 oz' },
+      { name: 'Whole milk', s950: '685g / 24.2 oz', s1500: '1082g / 38.2 oz' },
+      { name: 'Vanilla extract', s950: '6g / 0.2 oz', s1500: '9g / 0.3 oz' },
+      { name: 'Light corn syrup', s950: '33g / 1.2 oz', s1500: '52g / 1.8 oz' },
+      { name: 'Cooked medium/long-grain rice', s950: '125g / 4.4 oz', s1500: '197g / 6.9 oz' },
+    ],
+    steps: [
+      'Mix dry ingredients. Whisk in cream, milk, and vanilla.',
+      'Add corn syrup and cooked rice. Blend with immersion blender until rice is in small pieces.',
+      'Cook on medium-high, whisking continuously, 8–10 min until thickened. Cook 15 sec more. Remove from heat.',
+      'Cool in bowl covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Creamy vanilla rice pudding in gelato form — a beloved Italian classic.'],
+  },
+  {
+    id: 'ricotta',
+    icon: '🍐',
+    name: 'Ricotta e Pera',
+    italian: 'Ricotta and Pear',
+    category: 'traditional',
+    softenTime: '7–10 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '56g / 2.0 oz', s1500: '88g / 3.1 oz' },
+      { name: 'Granulated sugar', s950: '225g / 7.9 oz', s1500: '355g / 12.5 oz' },
+      { name: 'Kosher salt', s950: '1 pinch', s1500: '1–2 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '200g / 7.1 oz', s1500: '316g / 11.1 oz' },
+      { name: 'Whole milk', s950: '600g / 21.2 oz', s1500: '947g / 33.4 oz' },
+      { name: 'Light corn syrup', s950: '35g / 1.2 oz', s1500: '55g / 1.9 oz' },
+      { name: 'Fresh ricotta', s950: '170g / 6.0 oz', s1500: '268g / 9.5 oz' },
+      { name: 'Ripe pears, peeled, cored, diced (~1½ pears)', s950: '180g / 6.3 oz', s1500: '284g / 10.0 oz' },
+    ],
+    steps: [
+      'Mix milk powder, sugar, salt, and starch. Whisk in cream and milk.',
+      'Add corn syrup, ricotta, and pear. Blend with immersion blender until pear is very finely incorporated.',
+      'Cook on medium-high, whisking, 8–10 min until thickened. Cook 15 sec more. Remove from heat.',
+      'Cool in bowl covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Use the freshest ricotta possible — Calabria Cheese brand recommended. Serve alone or with simple pound cake.'],
+  },
+  {
+    id: 'tiramisu',
+    icon: '☕',
+    name: 'Tiramisu',
+    italian: 'Pick Me Up',
+    category: 'traditional',
+    softenTime: '7–10 min',
+    qa: 'QA fix: Ladyfingers corrected from ¼ oz → 1.4 oz (40g). These were inconsistent in the source.',
+    ingredients: [
+      { name: 'Milk powder', s950: '56g / 2.0 oz', s1500: '88g / 3.1 oz' },
+      { name: 'Granulated sugar', s950: '180g / 6.3 oz', s1500: '284g / 10.0 oz' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '215g / 7.6 oz', s1500: '339g / 12.0 oz' },
+      { name: 'Whole milk', s950: '600g / 21.2 oz', s1500: '947g / 33.4 oz' },
+      { name: 'Sweet Marsala wine', s950: '12g / 0.4 oz', s1500: '19g / 0.7 oz' },
+      { name: 'Light corn syrup', s950: '33g / 1.2 oz', s1500: '52g / 1.8 oz' },
+      { name: 'Brewed espresso (~1 shot)', s950: '50g / 1.8 oz', s1500: '79g / 2.8 oz' },
+      { name: 'Egg yolks', s950: '2', s1500: '3' },
+      { name: '60–70% dark chocolate, finely chopped', s950: '50g / 1.8 oz', s1500: '79g / 2.8 oz' },
+      { name: 'Ladyfingers, crushed ✓', s950: '40g / 1.4 oz', s1500: '63g / 2.2 oz' },
+    ],
+    steps: [
+      'Mix dry ingredients. Whisk in cream, milk, and Marsala wine.',
+      'Whisk in corn syrup, cooled espresso, and egg yolks.',
+      'Cook on medium-high, whisking, 8–10 min until thickened. Cook 15 sec more. Remove from heat.',
+      'Cool in bowl covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Espresso, Marsala, chocolate, and ladyfingers — all the flavours of the classic Italian dessert.'],
+  },
+  {
+    id: 'zabaione',
+    icon: '🍷',
+    name: 'Zabaione',
+    italian: 'Sweet Wine Custard',
+    category: 'traditional',
+    softenTime: '7–10 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '46g / 1.6 oz', s1500: '73g / 2.6 oz' },
+      { name: 'Granulated sugar', s950: '215g / 7.6 oz', s1500: '339g / 12.0 oz' },
+      { name: 'Kosher salt', s950: '1 pinch', s1500: '1–2 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '240g / 8.5 oz', s1500: '379g / 13.4 oz' },
+      { name: 'Whole milk', s950: '600g / 21.2 oz', s1500: '947g / 33.4 oz' },
+      { name: 'Port or fortified wine', s950: '37g / 1.3 oz', s1500: '58g / 2.0 oz' },
+      { name: 'Light corn syrup', s950: '21g / 0.7 oz', s1500: '33g / 1.2 oz' },
+      { name: 'Egg yolks', s950: '4', s1500: '6' },
+    ],
+    steps: [
+      'Mix dry ingredients. Whisk in cream, milk, and port wine.',
+      'Whisk in corn syrup and egg yolks.',
+      'Cook on medium-high, whisking, 8–10 min until thickened. Cook 15 sec more. Remove from heat.',
+      'Cool in bowl covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Serve with fresh berries and mint. Sherry, Marsala, and Madeira all work as alternatives to port.'],
+  },
+  {
+    id: 'fiorentina',
+    icon: '🍊',
+    name: 'Crema Fiorentina',
+    italian: 'Florentine Cream',
+    category: 'traditional',
+    softenTime: '8–12 min',
+    qa: 'QA fix: 4 egg yolks added — missing from original ingredient list but called for in the method step and described in the book ("hints of vanilla, egg, and orange").',
+    ingredients: [
+      { name: 'Milk powder', s950: '46g / 1.6 oz', s1500: '73g / 2.6 oz' },
+      { name: 'Granulated sugar', s950: '215g / 7.6 oz', s1500: '339g / 12.0 oz' },
+      { name: 'Kosher salt', s950: '1 pinch', s1500: '1–2 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '240g / 8.5 oz', s1500: '379g / 13.4 oz' },
+      { name: 'Whole milk', s950: '600g / 21.2 oz', s1500: '947g / 33.4 oz' },
+      { name: 'Light corn syrup', s950: '33g / 1.2 oz', s1500: '52g / 1.8 oz' },
+      { name: 'Egg yolks ✦ restored', s950: '4', s1500: '6' },
+      { name: 'Vanilla bean, seeds scraped', s950: '1 bean', s1500: '1–2 beans' },
+      { name: 'Orange zest', s950: '½ orange', s1500: '¾ orange' },
+    ],
+    steps: [
+      'Mix dry ingredients. Whisk in cream and milk. Whisk in corn syrup and egg yolks.',
+      'Transfer to saucepan. Whisk in vanilla bean seeds.',
+      'Cook on medium-high, whisking, 8–10 min until thickened. Cook 15 sec more. Remove from heat.',
+      'Pour into cooling bowl, whisk in orange zest. Cover with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Florence\'s signature gelato since the 16th century. Try folding whipped cream in for a mousse-like version.'],
+  },
+  {
+    id: 'catalana',
+    icon: '🔥',
+    name: 'Crema Catalana',
+    italian: 'Crème Brûlée',
+    category: 'traditional',
+    softenTime: '8–12 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '46g / 1.6 oz', s1500: '73g / 2.6 oz' },
+      { name: 'Granulated sugar', s950: '215g / 7.6 oz', s1500: '339g / 12.0 oz' },
+      { name: 'Kosher salt', s950: '1 pinch', s1500: '1–2 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '240g / 8.5 oz', s1500: '379g / 13.4 oz' },
+      { name: 'Whole milk', s950: '600g / 21.2 oz', s1500: '947g / 33.4 oz' },
+      { name: 'Vanilla extract', s950: '4g / 0.1 oz', s1500: '6g / 0.2 oz' },
+      { name: 'Light corn syrup', s950: '33g / 1.2 oz', s1500: '52g / 1.8 oz' },
+      { name: 'Egg yolks', s950: '4', s1500: '6' },
+      { name: 'Vanilla bean, seeds scraped', s950: '1 bean', s1500: '1–2 beans' },
+      { name: 'Orange zest', s950: '½ orange', s1500: '¾ orange' },
+      { name: 'Granulated sugar (for brûlée)', s950: 'to cover top', s1500: 'to cover top' },
+    ],
+    steps: [
+      'Mix dry ingredients. Whisk in cream, milk, and vanilla extract. Whisk in corn syrup and egg yolks.',
+      'Transfer to saucepan. Whisk in vanilla bean seeds. Cook medium-high, whisking, 8–10 min. Cook 15 sec more. Remove from heat.',
+      'Whisk in orange zest. Cool covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+      'Brûlée: Sprinkle sugar evenly over surface. Torch on medium-low, caramelize in ≤5 min. Freeze 20 min. Freeze again 1 hour before serving.',
+    ],
+    tips: ['Use a microplane for zesting — only the top layer of skin; the white pith is bitter.'],
+  },
+  {
+    id: 'mandorla',
+    icon: '🌰',
+    name: 'Mandorla',
+    italian: 'Almond',
+    category: 'nuts',
+    softenTime: '8–12 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '46g / 1.6 oz', s1500: '73g / 2.6 oz' },
+      { name: 'Granulated sugar', s950: '180g / 6.3 oz', s1500: '284g / 10.0 oz' },
+      { name: 'Kosher salt', s950: '2 pinches', s1500: '3 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '192g / 6.8 oz', s1500: '303g / 10.7 oz' },
+      { name: 'Whole milk', s950: '685g / 24.2 oz', s1500: '1082g / 38.2 oz' },
+      { name: 'Light corn syrup', s950: '33g / 1.2 oz', s1500: '52g / 1.8 oz' },
+      { name: 'Almond extract', s950: '6g / 0.2 oz', s1500: '9g / 0.3 oz' },
+      { name: 'Almonds, chopped, skins on', s950: '70g / 2.5 oz', s1500: '111g / 3.9 oz' },
+    ],
+    steps: [
+      'Mix dry ingredients. Whisk in cream and milk.',
+      'Add corn syrup, almond extract, and almonds. Blend with immersion blender until almonds are small pieces.',
+      'Cook medium-high, whisking, 8–10 min. Cook 15 sec more. Remove from heat.',
+      'Cool covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Use almond extract AND chopped almonds for maximum flavour. Toast skins on for richer colour. Try affogato-style with a shot of espresso poured over the top!'],
+  },
+  {
+    id: 'mandorla-arancia',
+    icon: '🍊',
+    name: 'Mandorla e Arancia',
+    italian: 'Almond and Orange',
+    category: 'nuts',
+    softenTime: '8–12 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '46g / 1.6 oz', s1500: '73g / 2.6 oz' },
+      { name: 'Granulated sugar', s950: '180g / 6.3 oz', s1500: '284g / 10.0 oz' },
+      { name: 'Kosher salt', s950: '1 pinch', s1500: '1–2 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '192g / 6.8 oz', s1500: '303g / 10.7 oz' },
+      { name: 'Whole milk', s950: '685g / 24.2 oz', s1500: '1082g / 38.2 oz' },
+      { name: 'Light corn syrup', s950: '33g / 1.2 oz', s1500: '52g / 1.8 oz' },
+      { name: 'Almond extract', s950: '6g / 0.2 oz', s1500: '9g / 0.3 oz' },
+      { name: 'Almonds, chopped, skins on', s950: '70g / 2.5 oz', s1500: '111g / 3.9 oz' },
+      { name: 'Orange zest', s950: '2 oranges', s1500: '3 oranges' },
+    ],
+    steps: [
+      'Mix dry ingredients. Whisk in cream and milk.',
+      'Add corn syrup, almond extract, and almonds. Blend with immersion blender.',
+      'Cook medium-high, whisking, 8–10 min. Cook 15 sec more. Remove from heat.',
+      'Whisk in orange zest. Cool covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Orange zest added after cooking to preserve fresh citrus flavour.'],
+  },
+  {
+    id: 'nocciola',
+    icon: '🫘',
+    name: 'Nocciola',
+    italian: 'Hazelnut',
+    category: 'nuts',
+    softenTime: '8–12 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '30g / 1.1 oz', s1500: '47g / 1.7 oz' },
+      { name: 'Granulated sugar', s950: '144g / 5.1 oz', s1500: '227g / 8.0 oz' },
+      { name: 'Kosher salt', s950: '2 pinches', s1500: '3 pinches' },
+      { name: 'Tapioca starch', s950: '17g / 0.6 oz', s1500: '27g / 1.0 oz' },
+      { name: 'Heavy cream', s950: '154g / 5.4 oz', s1500: '243g / 8.6 oz' },
+      { name: 'Whole milk', s950: '548g / 19.3 oz', s1500: '865g / 30.5 oz' },
+      { name: 'Light corn syrup', s950: '27g / 1.0 oz', s1500: '43g / 1.5 oz' },
+      { name: 'Light brown sugar', s950: '30g / 1.1 oz', s1500: '47g / 1.7 oz' },
+      { name: 'Hazelnut praline paste (solid part)', s950: '80g / 2.8 oz', s1500: '126g / 4.4 oz' },
+      { name: 'Hazelnuts, roasted', s950: '50g / 1.8 oz', s1500: '79g / 2.8 oz' },
+    ],
+    steps: [
+      'Mix milk powder, both sugars, salt, and starch. Whisk in cream and milk.',
+      'Add corn syrup and hazelnut praline paste and oil. Blend with immersion blender until fully smooth.',
+      'Cook medium-high, whisking, 8–10 min. Cook 15 sec more. Remove from heat.',
+      'Whisk in roasted hazelnuts. Cool covered, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Roast hazelnuts at 350°F / 177°C for ~10 min. Do not over-roast — they become bitter. Love\'n Bake paste is recommended.'],
+  },
+  {
+    id: 'pistacchio',
+    icon: '🟢',
+    name: 'Pistacchio',
+    italian: 'Pistachio',
+    category: 'nuts',
+    softenTime: '8–12 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '30g / 1.1 oz', s1500: '47g / 1.7 oz' },
+      { name: 'Granulated sugar', s950: '144g / 5.1 oz', s1500: '227g / 8.0 oz' },
+      { name: 'Kosher salt', s950: '2 pinches', s1500: '3 pinches' },
+      { name: 'Tapioca starch', s950: '17g / 0.6 oz', s1500: '27g / 1.0 oz' },
+      { name: 'Heavy cream', s950: '154g / 5.4 oz', s1500: '243g / 8.6 oz' },
+      { name: 'Whole milk', s950: '548g / 19.3 oz', s1500: '865g / 30.5 oz' },
+      { name: 'Light corn syrup', s950: '27g / 1.0 oz', s1500: '43g / 1.5 oz' },
+      { name: 'Light brown sugar', s950: '30g / 1.1 oz', s1500: '47g / 1.7 oz' },
+      { name: 'Pistachio paste (per brand)', s950: 'see notes', s1500: 'see notes' },
+      { name: 'Raw pistachios, chopped', s950: '60g / 2.1 oz', s1500: '95g / 3.4 oz' },
+    ],
+    steps: [
+      'Mix dry ingredients. Whisk in cream and milk.',
+      'Add corn syrup, pistachio paste, and pistachios. Blend with immersion blender — the finer the pieces, the better.',
+      'Cook medium-high, whisking, 8–10 min. Cook 15 sec more. Remove from heat.',
+      'Cool covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Best pistachios: Bronte, Sicily (volcanic, intensely green). Love\'n Bake paste is a good alternative.'],
+  },
+  {
+    id: 'noce',
+    icon: '🥜',
+    name: 'Noce',
+    italian: 'Walnut',
+    category: 'nuts',
+    softenTime: '10–15 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '46g / 1.6 oz', s1500: '73g / 2.6 oz' },
+      { name: 'Granulated sugar', s950: '200g / 7.1 oz', s1500: '316g / 11.1 oz' },
+      { name: 'Kosher salt', s950: '2 pinches', s1500: '3 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '192g / 6.8 oz', s1500: '303g / 10.7 oz' },
+      { name: 'Whole milk', s950: '685g / 24.2 oz', s1500: '1082g / 38.2 oz' },
+      { name: 'Light corn syrup', s950: '36g / 1.3 oz', s1500: '57g / 2.0 oz' },
+      { name: 'Raw walnuts, shelled, chopped', s950: '193g / 6.8 oz', s1500: '305g / 10.8 oz' },
+    ],
+    steps: [
+      'Mix dry ingredients. Whisk in cream and milk.',
+      'Add corn syrup and walnuts. Blend with immersion blender until walnuts are small pieces.',
+      'Cook medium-high, whisking, 8–10 min. Cook 15 sec more. Remove from heat.',
+      'Cool covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Popular in Italy, rare in America. Excellent in winter — top warm brownies or pair with hot desserts.'],
+  },
+  {
+    id: 'pinolo',
+    icon: '🌲',
+    name: 'Pinolo',
+    italian: 'Pine Nut',
+    category: 'nuts',
+    softenTime: '10–15 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '56g / 2.0 oz', s1500: '88g / 3.1 oz' },
+      { name: 'Granulated sugar', s950: '180g / 6.3 oz', s1500: '284g / 10.0 oz' },
+      { name: 'Kosher salt', s950: '2 pinches', s1500: '3 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '192g / 6.8 oz', s1500: '303g / 10.7 oz' },
+      { name: 'Whole milk', s950: '685g / 24.2 oz', s1500: '1082g / 38.2 oz' },
+      { name: 'Light corn syrup', s950: '33g / 1.2 oz', s1500: '52g / 1.8 oz' },
+      { name: 'Whole pine nuts', s950: '82g / 2.9 oz', s1500: '129g / 4.6 oz' },
+    ],
+    steps: [
+      'Mix dry ingredients. Whisk in cream and milk.',
+      'Add corn syrup and pine nuts. Blend with immersion blender until pine nuts are small pieces.',
+      'Cook medium-high, whisking, 8–10 min. Cook 15 sec more. Remove from heat.',
+      'Cool covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Elegant, buttery, delicate. Variation: toast pine nuts until dark brown — they brown very quickly, watch carefully!'],
+  },
+  {
+    id: 'noce-pera',
+    icon: '🍐',
+    name: 'Noce e Pera',
+    italian: 'Walnut and Pear',
+    category: 'nuts',
+    softenTime: '12–15 min',
+    qa: 'QA fix: Walnuts were completely missing from the original ingredient table despite being a core ingredient (in the name and method steps). Restored at 193g / 6.8 oz.',
+    ingredients: [
+      { name: 'Milk powder', s950: '46g / 1.6 oz', s1500: '73g / 2.6 oz' },
+      { name: 'Granulated sugar', s950: '215g / 7.6 oz', s1500: '339g / 12.0 oz' },
+      { name: 'Kosher salt', s950: '2 pinches', s1500: '3 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '192g / 6.8 oz', s1500: '303g / 10.7 oz' },
+      { name: 'Whole milk', s950: '685g / 24.2 oz', s1500: '1082g / 38.2 oz' },
+      { name: 'Light corn syrup', s950: '36g / 1.3 oz', s1500: '57g / 2.0 oz' },
+      { name: 'Raw walnuts, chopped ✦ restored', s950: '193g / 6.8 oz', s1500: '305g / 10.8 oz' },
+      { name: 'Bosc pears, peeled, cored, diced (~1½)', s950: '180g / 6.3 oz', s1500: '284g / 10.0 oz' },
+    ],
+    steps: [
+      'Mix dry ingredients. Whisk in cream and milk.',
+      'Add corn syrup, walnuts, and pear. Blend with immersion blender until walnuts are small and pear is incorporated.',
+      'Cook medium-high, whisking, 8–10 min. Cook 15 sec more. Remove from heat.',
+      'Cool covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Choose pears at peak ripeness. Rose pears or Bosc both work well.'],
+  },
+  {
+    id: 'apple',
+    icon: '🍎',
+    name: 'Torta di Mele',
+    italian: 'Apple Pie',
+    category: 'nontraditional',
+    softenTime: '7–10 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '56g / 2.0 oz', s1500: '88g / 3.1 oz' },
+      { name: 'Granulated sugar', s950: '200g / 7.1 oz', s1500: '316g / 11.1 oz' },
+      { name: 'Kosher salt', s950: '1 pinch', s1500: '1–2 pinches' },
+      { name: 'Ground cinnamon', s950: '1 pinch', s1500: '1–2 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '192g / 6.8 oz', s1500: '303g / 10.7 oz' },
+      { name: 'Whole milk', s950: '685g / 24.2 oz', s1500: '1082g / 38.2 oz' },
+      { name: 'Light corn syrup', s950: '33g / 1.2 oz', s1500: '52g / 1.8 oz' },
+      { name: 'Apple pie filling', s950: '200g / 7.1 oz', s1500: '316g / 11.1 oz' },
+    ],
+    steps: [
+      'Mix dry ingredients (including cinnamon). Whisk in cream and milk.',
+      'Add corn syrup and apple pie filling. Blend with immersion blender until fully incorporated.',
+      'Cook medium-high, whisking, 8–10 min. Cook 15 sec more. Remove from heat.',
+      'Cool covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Made only on the 4th of July at Morano Gelato. Homemade or canned apple pie filling both work well.'],
+  },
+  {
+    id: 'avocado',
+    icon: '🥑',
+    name: 'Avocado',
+    italian: 'Avocado',
+    category: 'nontraditional',
+    softenTime: '7–10 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '56g / 2.0 oz', s1500: '88g / 3.1 oz' },
+      { name: 'Granulated sugar', s950: '200g / 7.1 oz', s1500: '316g / 11.1 oz' },
+      { name: 'Kosher salt', s950: '1 pinch', s1500: '1–2 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '192g / 6.8 oz', s1500: '303g / 10.7 oz' },
+      { name: 'Whole milk', s950: '685g / 24.2 oz', s1500: '1082g / 38.2 oz' },
+      { name: 'Light corn syrup', s950: '33g / 1.2 oz', s1500: '52g / 1.8 oz' },
+      { name: 'Avocado, sliced (~1 avocado)', s950: '134g / 4.7 oz', s1500: '212g / 7.5 oz' },
+    ],
+    steps: [
+      'Mix dry ingredients. Whisk in cream and milk.',
+      'Add corn syrup and avocado. Blend with immersion blender until fully smooth with no pieces remaining.',
+      'Cook medium-high, whisking, 8–10 min. Cook 15 sec more. Remove from heat.',
+      'Cool covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Made on Cinco de Mayo. Use a fully ripe avocado — the softer it is, the creamier the blend.'],
+  },
+  {
+    id: 'biscoff',
+    icon: '🍪',
+    name: 'Biscoff',
+    italian: 'European Spice Cookie',
+    category: 'nontraditional',
+    softenTime: '7–10 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '56g / 2.0 oz', s1500: '88g / 3.1 oz' },
+      { name: 'Granulated sugar', s950: '200g / 7.1 oz', s1500: '316g / 11.1 oz' },
+      { name: 'Kosher salt', s950: '1 pinch', s1500: '1–2 pinches' },
+      { name: 'Ground cinnamon', s950: '1 pinch', s1500: '1–2 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '192g / 6.8 oz', s1500: '303g / 10.7 oz' },
+      { name: 'Whole milk', s950: '685g / 24.2 oz', s1500: '1082g / 38.2 oz' },
+      { name: 'Light corn syrup', s950: '15g / 0.5 oz', s1500: '24g / 0.8 oz' },
+      { name: 'Biscoff Spread (creamy)', s950: '125g / 4.4 oz', s1500: '197g / 7.0 oz' },
+    ],
+    steps: [
+      'Mix dry ingredients (including cinnamon). Whisk in cream and milk.',
+      'Add corn syrup and Biscoff Spread. Blend with immersion blender until fully incorporated.',
+      'Cook medium-high, whisking, 8–10 min. Cook 15 sec more. Remove from heat.',
+      'Cool covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Available near peanut butter in specialty stores, or at www.biscoff.com. Crush 3–4 cookies on top to serve.'],
+  },
+  {
+    id: 'burro',
+    icon: '🧈',
+    name: 'Burro Rosolato',
+    italian: 'Brown Butter',
+    category: 'nontraditional',
+    softenTime: '8–12 min',
+    qa: null,
+    ingredients: [
+      { name: 'Browned butter (~1 stick)', s950: '85g / 3.0 oz', s1500: '134g / 4.7 oz' },
+      { name: 'Milk powder', s950: '56g / 2.0 oz', s1500: '88g / 3.1 oz' },
+      { name: 'Granulated sugar', s950: '180g / 6.3 oz', s1500: '284g / 10.0 oz' },
+      { name: 'Kosher salt', s950: '2 pinches', s1500: '3 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '192g / 6.8 oz', s1500: '303g / 10.7 oz' },
+      { name: 'Whole milk', s950: '685g / 24.2 oz', s1500: '1082g / 38.2 oz' },
+      { name: 'Light corn syrup', s950: '33g / 1.2 oz', s1500: '52g / 1.8 oz' },
+    ],
+    steps: [
+      'Brown the butter: slice 1 stick into 4 pieces, melt in a skillet on medium. Shake pan occasionally. Once foaming, reduce to medium-low for 10–15 min. Remove from heat.',
+      'Mix dry ingredients. Whisk in cream and milk. Whisk in corn syrup.',
+      'Transfer to saucepan. Add browned butter (microwave 5 sec to re-liquefy if needed). Cook medium-high, whisking, 8–10 min. Cook 15 sec more. Remove from heat.',
+      'Cool covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['The browner the butter the deeper the flavour — but any burned notes carry into the gelato, so don\'t go too dark. Thanksgiving special at Morano Gelato.'],
+  },
+  {
+    id: 'ciambella',
+    icon: '🍩',
+    name: 'Ciambella',
+    italian: 'Doughnut',
+    category: 'nontraditional',
+    softenTime: '10–12 min',
+    qa: null,
+    ingredients: [
+      { name: 'Milk powder', s950: '56g / 2.0 oz', s1500: '88g / 3.1 oz' },
+      { name: 'Granulated sugar', s950: '190g / 6.7 oz', s1500: '300g / 10.6 oz' },
+      { name: 'Kosher salt', s950: '1 pinch', s1500: '1–2 pinches' },
+      { name: 'Ground nutmeg', s950: '1 pinch', s1500: '1–2 pinches' },
+      { name: 'Ground cinnamon', s950: '1 pinch', s1500: '1–2 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '192g / 6.8 oz', s1500: '303g / 10.7 oz' },
+      { name: 'Whole milk', s950: '685g / 24.2 oz', s1500: '1082g / 38.2 oz' },
+      { name: 'Light corn syrup', s950: '33g / 1.2 oz', s1500: '52g / 1.8 oz' },
+      { name: 'Doughnut, broken into pieces', s950: '115g / 4.1 oz', s1500: '182g / 6.4 oz' },
+    ],
+    steps: [
+      'Mix dry ingredients (including nutmeg and cinnamon). Whisk in cream and milk.',
+      'Add corn syrup and doughnut pieces. Blend with immersion blender until fully incorporated.',
+      'Cook medium-high, whisking, 8–10 min. Cook 15 sec more. Remove from heat.',
+      'Cool covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Use a cake-style donut — not too greasy or glazed. Made on 4th of July. Pair with Espresso gelato for breakfast!'],
+  },
+  {
+    id: 'acero',
+    icon: '🍁',
+    name: 'Acero',
+    italian: 'Maple',
+    category: 'nontraditional',
+    softenTime: '5–8 min',
+    qa: 'QA fix: Source listed corn syrup twice. Second entry correctly identified as pure maple syrup, confirmed by preparation step ("corn syrup, maple syrup, and egg yolks").',
+    ingredients: [
+      { name: 'Milk powder', s950: '56g / 2.0 oz', s1500: '88g / 3.1 oz' },
+      { name: 'Granulated sugar', s950: '170g / 6.0 oz', s1500: '268g / 9.5 oz' },
+      { name: 'Kosher salt', s950: '1 pinch', s1500: '1–2 pinches' },
+      { name: 'Tapioca starch', s950: '20g / 0.7 oz', s1500: '32g / 1.1 oz' },
+      { name: 'Heavy cream', s950: '210g / 7.4 oz', s1500: '332g / 11.7 oz' },
+      { name: 'Whole milk', s950: '685g / 24.2 oz', s1500: '1082g / 38.2 oz' },
+      { name: 'Light corn syrup', s950: '28g / 1.0 oz', s1500: '44g / 1.6 oz' },
+      { name: 'Pure maple syrup (dark grade) ✓', s950: '28g / 1.0 oz', s1500: '44g / 1.6 oz' },
+      { name: 'Egg yolk', s950: '1', s1500: '2' },
+    ],
+    steps: [
+      'Mix dry ingredients. Whisk in cream and milk.',
+      'Whisk in corn syrup, maple syrup, and egg yolk(s).',
+      'Cook medium-high, whisking, 8–10 min. Cook 15 sec more. Remove from heat.',
+      'Cool covered with plastic wrap, refrigerate ~4 hours.',
+      'Churn 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Use the darkest pure maple syrup available for best flavour. Pure maple syrup keeps indefinitely in the freezer — bring to room temp before using.'],
+  },
+  // SORBETS
+  {
+    id: 'syrup',
+    icon: '🫙',
+    name: 'Sorbet Syrup Base',
+    italian: 'Lo Sciroppo per Sorbetto',
+    category: 'sorbet',
+    softenTime: 'N/A — base only',
+    qa: null,
+    ingredients: [
+      { name: 'Granulated sugar', s950: '500g / 17.6 oz', s1500: '789g / 27.8 oz' },
+      { name: 'Tapioca starch', s950: '15g / 0.5 oz', s1500: '24g / 0.8 oz' },
+      { name: 'Water', s950: '500g / 17.6 oz', s1500: '789g / 27.8 oz' },
+      { name: 'Light corn syrup', s950: '115g / 4.1 oz', s1500: '182g / 6.4 oz' },
+    ],
+    steps: [
+      'Mix sugar and tapioca starch. Whisk in water and corn syrup.',
+      'Cook on medium-high, whisking continuously, 12–15 min until thickened and viscous. Remove from heat.',
+      'Cool at room temp 30–45 min, then refrigerate at least 4 hours.',
+      'Store in airtight container in fridge up to 4 days. Whisk well before each use.',
+    ],
+    tips: ['Make this ahead! All sorbet recipes use this syrup as a base. Customers often think sorbets contain dairy because of this syrup\'s creaminess.'],
+  },
+  {
+    id: 'banana',
+    icon: '🍌',
+    name: 'Banana Sorbet',
+    italian: 'Banana',
+    category: 'sorbet',
+    softenTime: '8–10 min',
+    qa: null,
+    ingredients: [
+      { name: 'Bananas, peeled, halved (~6)', s950: '525g / 18.5 oz', s1500: '829g / 29.2 oz' },
+      { name: 'Cold water', s950: '50g / 1.8 oz', s1500: '79g / 2.8 oz' },
+      { name: 'Sorbet syrup (cooled, whisked)', s950: '500g / 17.6 oz', s1500: '789g / 27.8 oz' },
+      { name: 'Lemon juice (optional)', s950: '2g / 0.1 oz', s1500: '3g / 0.1 oz' },
+    ],
+    steps: [
+      'Place bananas, water, sorbet syrup, and lemon juice (if using) in a bowl.',
+      'Blend with immersion blender until fully smooth.',
+      'Churn in gelato machine 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['One of the smoothest sorbets — banana\'s low water content gives it natural creaminess.'],
+  },
+  {
+    id: 'fragola',
+    icon: '🍓',
+    name: 'Fragola',
+    italian: 'Strawberry Sorbet',
+    category: 'sorbet',
+    softenTime: '10–20 min',
+    qa: null,
+    ingredients: [
+      { name: 'Strawberries, hulled and sliced', s950: '440g / 15.5 oz', s1500: '695g / 24.5 oz' },
+      { name: 'Cold water', s950: '50g / 1.8 oz', s1500: '79g / 2.8 oz' },
+      { name: 'Sorbet syrup (cooled, whisked)', s950: '415g / 14.6 oz', s1500: '655g / 23.1 oz' },
+      { name: 'Fresh-squeezed lemon juice', s950: '3g / 0.1 oz', s1500: '5g / 0.2 oz' },
+      { name: 'Fresh-squeezed orange juice', s950: '3g / 0.1 oz', s1500: '5g / 0.2 oz' },
+    ],
+    steps: [
+      'Place all ingredients in a bowl. Blend with immersion blender.',
+      'Churn in gelato machine 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Best with ripe, in-season strawberries. Try blending with Prosecco for a light summer cocktail!'],
+  },
+  {
+    id: 'bosco',
+    icon: '🫐',
+    name: 'Frutti di Bosco',
+    italian: 'Forest Berries Sorbet',
+    category: 'sorbet',
+    softenTime: '10–20 min',
+    qa: 'QA fix: Water corrected from "21 oz" to 2.1 oz (60g). The ounce value was off by 10× in the source.',
+    ingredients: [
+      { name: 'Strawberries, hulled and sliced', s950: '80g / 2.8 oz', s1500: '126g / 4.4 oz' },
+      { name: 'Raspberries, whole', s950: '140g / 4.9 oz', s1500: '221g / 7.8 oz' },
+      { name: 'Blueberries, whole', s950: '110g / 3.9 oz', s1500: '174g / 6.1 oz' },
+      { name: 'Blackberries, whole', s950: '110g / 3.9 oz', s1500: '174g / 6.1 oz' },
+      { name: 'Cold water ✓', s950: '60g / 2.1 oz', s1500: '95g / 3.4 oz' },
+      { name: 'Sorbet syrup (cooled, whisked)', s950: '415g / 14.6 oz', s1500: '655g / 23.1 oz' },
+    ],
+    steps: [
+      'Place all ingredients in a bowl. Blend with immersion blender until smooth.',
+      'Churn in gelato machine 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['The sorbet most remembered by visitors to Italian gelato shops. Any mix of berries works.'],
+  },
+  {
+    id: 'kiwi',
+    icon: '🥝',
+    name: 'Kiwi Sorbet',
+    italian: 'Kiwi',
+    category: 'sorbet',
+    softenTime: '10–20 min',
+    qa: null,
+    ingredients: [
+      { name: 'Kiwis, peeled, diced (~8 kiwis)', s950: '479g / 16.9 oz', s1500: '756g / 26.7 oz' },
+      { name: 'Cold water', s950: '50g / 1.8 oz', s1500: '79g / 2.8 oz' },
+      { name: 'Sorbet syrup (cooled, whisked)', s950: '390g / 13.8 oz', s1500: '616g / 21.7 oz' },
+      { name: 'Lemon juice (optional)', s950: '2g / 0.1 oz', s1500: '3g / 0.1 oz' },
+    ],
+    steps: [
+      'Place all ingredients in a bowl. Blend with immersion blender.',
+      'Churn in gelato machine 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Choose kiwis that give slightly when pressed. If very sweet, add lemon juice to balance.'],
+  },
+  {
+    id: 'limone',
+    icon: '🍋',
+    name: 'Limone',
+    italian: 'Lemon Sorbet',
+    category: 'sorbet',
+    softenTime: '10–20 min',
+    qa: null,
+    ingredients: [
+      { name: 'Fresh-squeezed lemon juice, strained (~11 lemons)', s950: '460g / 16.2 oz', s1500: '726g / 25.6 oz' },
+      { name: 'Sorbet syrup (cooled, whisked)', s950: '615g / 21.7 oz', s1500: '971g / 34.3 oz' },
+      { name: 'Lemon zest', s950: '4 lemons', s1500: '6 lemons' },
+    ],
+    steps: [
+      'Place lemon juice and sorbet syrup in a bowl. Add lemon zest and whisk well.',
+      'Churn in gelato machine 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Roll lemons on the counter before juicing to maximise yield. Lime can be substituted for lemon.'],
+  },
+  {
+    id: 'melone',
+    icon: '🍈',
+    name: 'Melone',
+    italian: 'Cantaloupe Sorbet',
+    category: 'sorbet',
+    softenTime: '10–20 min',
+    qa: null,
+    ingredients: [
+      { name: 'Cantaloupe, peeled, diced (~1 melon)', s950: '595g / 21.0 oz', s1500: '939g / 33.1 oz' },
+      { name: 'Cold water', s950: '50g / 1.8 oz', s1500: '79g / 2.8 oz' },
+      { name: 'Sorbet syrup (cooled, whisked)', s950: '515g / 18.2 oz', s1500: '813g / 28.7 oz' },
+    ],
+    steps: [
+      'Place cantaloupe, water, and sorbet syrup in a bowl. Blend with immersion blender.',
+      'Churn in gelato machine 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Ripeness test: shake (seeds should rattle) and smell the stem end (should smell of melon).'],
+  },
+  {
+    id: 'pera',
+    icon: '🍐',
+    name: 'Pera',
+    italian: 'Pear Sorbet',
+    category: 'sorbet',
+    softenTime: '10–20 min',
+    qa: null,
+    ingredients: [
+      { name: 'Pears, peeled, cored, diced (~5 pears)', s950: '459g / 16.2 oz', s1500: '725g / 25.6 oz' },
+      { name: 'Cold water', s950: '88g / 3.1 oz', s1500: '139g / 4.9 oz' },
+      { name: 'Sorbet syrup (cooled, whisked)', s950: '420g / 14.8 oz', s1500: '663g / 23.4 oz' },
+      { name: 'Lemon juice', s950: '5g / 0.2 oz', s1500: '8g / 0.3 oz' },
+    ],
+    steps: [
+      'Place all ingredients in a bowl. Blend with immersion blender.',
+      'Churn in gelato machine 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Use the ripest pears. To speed ripening: place in a paper bag with a banana.'],
+  },
+  {
+    id: 'arancia',
+    icon: '🍊',
+    name: 'Arancia',
+    italian: 'Orange Sorbet',
+    category: 'sorbet',
+    softenTime: '10–15 min',
+    qa: null,
+    ingredients: [
+      { name: 'Fresh-squeezed orange juice, strained (~8 oranges)', s950: '460g / 16.2 oz', s1500: '726g / 25.6 oz' },
+      { name: 'Sorbet syrup (cooled, whisked)', s950: '640g / 22.6 oz', s1500: '1011g / 35.7 oz' },
+      { name: 'Orange zest', s950: '1½ oranges', s1500: '2½ oranges' },
+    ],
+    steps: [
+      'Place orange juice and sorbet syrup in a bowl. Add zest and whisk well.',
+      'Churn in gelato machine 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Blood oranges work beautifully. For mandarins: peel, blend, then strain the juice.'],
+  },
+  {
+    id: 'prosecco',
+    icon: '🥂',
+    name: 'Prosecco Sorbet',
+    italian: 'Italian Champagne Sorbet',
+    category: 'sorbet',
+    softenTime: '10–15 min',
+    qa: null,
+    ingredients: [
+      { name: 'Prosecco', s950: '285g / 10.1 oz', s1500: '450g / 15.9 oz' },
+      { name: 'Cold water', s950: '305g / 10.8 oz', s1500: '482g / 17.0 oz' },
+      { name: 'Sorbet syrup (cooled, whisked)', s950: '315g / 11.1 oz', s1500: '497g / 17.5 oz' },
+    ],
+    steps: [
+      'Whisk Prosecco, water, and sorbet syrup together in a bowl.',
+      'Churn in gelato machine 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Any Prosecco or French Champagne works. Optional: add zest of 1 lemon or orange before churning.'],
+  },
+  {
+    id: 'lampone',
+    icon: '🍇',
+    name: 'Lampone',
+    italian: 'Raspberry Sorbet',
+    category: 'sorbet',
+    softenTime: '10–20 min',
+    qa: null,
+    ingredients: [
+      { name: 'Raspberries, whole (~2.5 pints)', s950: '440g / 15.5 oz', s1500: '695g / 24.5 oz' },
+      { name: 'Cold water', s950: '50g / 1.8 oz', s1500: '79g / 2.8 oz' },
+      { name: 'Sorbet syrup (cooled, whisked)', s950: '415g / 14.6 oz', s1500: '655g / 23.1 oz' },
+    ],
+    steps: [
+      'Place raspberries, water, and sorbet syrup in a bowl. Blend with immersion blender.',
+      'Churn in gelato machine 30–55 min. Scoop, cover, seal, freeze 4–6 hours.',
+    ],
+    tips: ['Beautiful with flecks of seeds in every bite. Best with freshly picked, peak-season raspberries.'],
+  },
+];
+
+let currentCategory = 'all';
+let currentSearch = '';
+
+function setSize(size) {
+  if (size === 950) {
+    document.body.classList.remove('show-1500');
+    document.getElementById('btn950').classList.add('active');
+    document.getElementById('btn1500').classList.remove('active');
+  } else {
+    document.body.classList.add('show-1500');
+    document.getElementById('btn1500').classList.add('active');
+    document.getElementById('btn950').classList.remove('active');
+  }
+}
+
+function setCategory(cat, btn) {
+  currentCategory = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderRecipes();
+}
+
+function filterRecipes() {
+  currentSearch = document.getElementById('searchInput').value.toLowerCase();
+  renderRecipes();
+}
+
+function toggleGuide() {
+  const m = document.getElementById('guideModal');
+  m.classList.toggle('open');
+}
+
+function toggleCard(id) {
+  const card = document.getElementById('card-' + id);
+  card.classList.toggle('open');
+}
+
+function getCategoryBadge(cat) {
+  const map = {
+    traditional: ['badge-traditional', 'Traditional'],
+    nuts: ['badge-nuts', 'Nut Flavour'],
+    nontraditional: ['badge-nontraditional', 'Nontraditional'],
+    sorbet: ['badge-sorbet', 'Sorbet'],
+  };
+  const [cls, label] = map[cat] || ['', cat];
+  return `<span class="cat-badge ${cls}">${label}</span>`;
+}
+
+function renderRecipes() {
+  const list = document.getElementById('recipeList');
+  const noResults = document.getElementById('noResults');
+  const guideCard = document.getElementById('guideCard');
+
+  const filtered = RECIPES.filter(r => {
+    const matchCat = currentCategory === 'all' || r.category === currentCategory;
+    const matchSearch = !currentSearch ||
+      r.name.toLowerCase().includes(currentSearch) ||
+      (r.italian && r.italian.toLowerCase().includes(currentSearch));
+    return matchCat && matchSearch;
+  });
+
+  // Show/hide guide card
+  guideCard.style.display = (currentCategory === 'all' && !currentSearch) ? 'flex' : 'none';
+
+  if (filtered.length === 0) {
+    list.innerHTML = '';
+    noResults.style.display = 'block';
+    return;
+  }
+  noResults.style.display = 'none';
+
+  list.innerHTML = filtered.map(r => `
+    <div class="recipe-card" id="card-${r.id}">
+      <div class="recipe-header" onclick="toggleCard('${r.id}')">
+        <div class="recipe-icon">${r.icon}</div>
+        <div class="recipe-title">
+          <h3>${r.name}${r.qa ? ' <span class="qa-badge">QA</span>' : ''}</h3>
+          <div>
+            ${r.italian && r.italian !== r.name ? `<span style="font-size:12px;color:var(--light-text);">${r.italian}</span>` : ''}
+            ${getCategoryBadge(r.category)}
+          </div>
+        </div>
+        <div class="recipe-chevron">▾</div>
+      </div>
+      <div class="recipe-body">
+        ${r.qa ? `<div class="qa-note">⚠️ <strong>QA Correction:</strong> ${r.qa}</div>` : ''}
+
+        <div class="section-title">Ingredients</div>
+        <table class="ing-table">
+          ${r.ingredients.map(ing => `
+            <tr>
+              <td>${ing.name}</td>
+              <td>
+                <span class="ing-amount size-950">${ing.s950}</span>
+                <span class="ing-amount size-1500">${ing.s1500}</span>
+              </td>
+            </tr>
+          `).join('')}
+        </table>
+
+        <div class="section-title">Method</div>
+        <ol class="steps-list">
+          ${r.steps.map(s => `<li><span>${s}</span></li>`).join('')}
+        </ol>
+
+        ${r.tips.length ? `
+          ${r.tips.map(t => `<div class="tip-box">💡 ${t}</div>`).join('')}
+        ` : ''}
+
+        ${r.softenTime !== 'N/A — base only' ? `
+          <div class="serve-info">
+            <span class="clock">⏱</span>
+            <span>Soften <strong>${r.softenTime}</strong> before serving (after 2+ days in freezer)</span>
+          </div>
+        ` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+renderRecipes();
+</script>
+</body>
+</html>
