@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-27T00:00:00Z",
+  "title": "Design System: The Art of Making Gelato",
+  "extensions": {
+    "colorMeta": {
+      "terracotta": {
+        "role": "primary",
+        "displayName": "Terracotta",
+        "canonical": "oklch(0.585 0.118 48)",
+        "tonalRamp": ["oklch(0.20 0.06 48)", "oklch(0.30 0.10 48)", "oklch(0.40 0.115 48)", "oklch(0.50 0.12 46)", "oklch(0.585 0.118 48)", "oklch(0.70 0.10 50)", "oklch(0.82 0.06 54)", "oklch(0.951 0.030 64)"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Espresso Ink",
+        "canonical": "oklch(0.255 0.022 54)",
+        "tonalRamp": ["oklch(0.20 0.02 54)", "oklch(0.255 0.022 54)", "oklch(0.34 0.026 53)", "oklch(0.44 0.028 52)", "oklch(0.548 0.026 56)", "oklch(0.66 0.022 60)", "oklch(0.80 0.016 66)", "oklch(0.92 0.010 72)"]
+      },
+      "cream-bg": {
+        "role": "neutral",
+        "displayName": "Warm Cream",
+        "canonical": "oklch(0.984 0.008 74)",
+        "tonalRamp": ["oklch(0.22 0.020 60)", "oklch(0.34 0.022 64)", "oklch(0.46 0.024 68)", "oklch(0.58 0.022 70)", "oklch(0.70 0.020 72)", "oklch(0.82 0.016 73)", "oklch(0.92 0.012 74)", "oklch(0.984 0.008 74)"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Lifted Surface",
+        "canonical": "oklch(0.997 0.004 80)"
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Muted Label Ink",
+        "canonical": "oklch(0.548 0.026 56)"
+      },
+      "success": {
+        "role": "tertiary",
+        "displayName": "Confirmed Green",
+        "canonical": "oklch(0.515 0.090 152)"
+      },
+      "qa-amber": {
+        "role": "tertiary",
+        "displayName": "QA Amber",
+        "canonical": "oklch(0.498 0.072 70)"
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display / Wordmark", "purpose": "App wordmark and modal title, Fraunces serif." },
+      "title": { "displayName": "Recipe Title", "purpose": "Recipe names, Fraunces serif, wraps not truncates." },
+      "body": { "displayName": "Body", "purpose": "Method steps and ingredient names, system sans at 15px for arm's-length reading." },
+      "label": { "displayName": "Label", "purpose": "Section headers, category words, uppercase system sans." }
+    },
+    "shadows": [
+      { "name": "card-rest", "value": "0 1px 2px oklch(0.30 0.02 55 / 0.045), 0 4px 18px oklch(0.30 0.02 55 / 0.055)", "purpose": "Standing shadow under recipe cards, guide card, active size toggle. Warm-tinted." },
+      { "name": "modal-lift", "value": "0 10px 44px oklch(0.28 0.02 55 / 0.16)", "purpose": "Guide modal only." }
+    ],
+    "motion": [
+      { "name": "ease-out-quint", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Default easing for state transitions and card disclosure." },
+      { "name": "duration-state", "value": "180ms", "purpose": "Color/background state transitions." },
+      { "name": "duration-disclosure", "value": "240ms", "purpose": "Accordion grid-template-rows expand/collapse." }
+    ],
+    "breakpoints": [
+      { "name": "phone", "value": "440px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Filter Pill (active)",
+      "kind": "chip",
+      "refersTo": "pill-filter-active",
+      "description": "The selected category filter. Solid accent, no glow.",
+      "html": "<button class=\"ds-pill-active\">All</button>",
+      "css": ".ds-pill-active{background:oklch(0.585 0.118 48);color:oklch(0.997 0.004 80);border:none;border-radius:999px;padding:8px 15px;font:600 13px/1 -apple-system,system-ui,sans-serif;cursor:pointer;}"
+    },
+    {
+      "name": "Filter Pill (default)",
+      "kind": "chip",
+      "refersTo": "pill-filter",
+      "description": "An unselected category filter in the horizontal scroller.",
+      "html": "<button class=\"ds-pill\">Classics</button>",
+      "css": ".ds-pill{background:oklch(0.997 0.004 80);color:oklch(0.440 0.028 52);border:1px solid oklch(0.908 0.013 74);border-radius:999px;padding:8px 15px;font:600 13px/1 -apple-system,system-ui,sans-serif;cursor:pointer;transition:background .18s,border-color .18s;}.ds-pill:hover{background:oklch(0.962 0.011 73);}"
+    },
+    {
+      "name": "Copy Button",
+      "kind": "button",
+      "refersTo": "copy-button",
+      "description": "Copies an ingredient list; confirms inline with a check and the word Copied.",
+      "html": "<button class=\"ds-copy\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"9\" y=\"9\" width=\"11\" height=\"11\" rx=\"2\"/><path d=\"M5 15V5a2 2 0 0 1 2-2h10\"/></svg><span>Copy ingredients</span></button>",
+      "css": ".ds-copy{display:flex;align-items:center;gap:7px;background:oklch(0.997 0.004 80);color:oklch(0.500 0.118 46);border:1px solid oklch(0.882 0.045 58);border-radius:11px;padding:10px 15px;font:600 13px/1 -apple-system,system-ui,sans-serif;cursor:pointer;transition:background .18s,border-color .18s;}.ds-copy svg{width:15px;height:15px;}.ds-copy:hover{background:oklch(0.951 0.030 64);}"
+    },
+    {
+      "name": "Search Input",
+      "kind": "input",
+      "refersTo": "search-input",
+      "description": "Flavour search with an inline magnifier and accent focus glow.",
+      "html": "<div class=\"ds-search\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><line x1=\"21\" y1=\"21\" x2=\"16.65\" y2=\"16.65\"/></svg><input placeholder=\"Search flavours…\"></div>",
+      "css": ".ds-search{position:relative;display:flex;align-items:center;}.ds-search svg{position:absolute;left:13px;width:16px;height:16px;color:oklch(0.548 0.026 56);pointer-events:none;}.ds-search input{width:100%;padding:11px 14px 11px 38px;border:1px solid oklch(0.908 0.013 74);border-radius:12px;font-size:16px;background:oklch(0.997 0.004 80);color:oklch(0.255 0.022 54);outline:none;transition:border-color .18s,box-shadow .18s;}.ds-search input:focus{border-color:oklch(0.585 0.118 48);box-shadow:0 0 0 3px oklch(0.951 0.030 64);}"
+    },
+    {
+      "name": "Recipe Card (collapsed)",
+      "kind": "card",
+      "refersTo": "recipe-card",
+      "description": "A list row: serif monogram tile, serif name, italian subtitle, muted category label, chevron.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-mono\">P</div><div class=\"ds-card-t\"><h3>Pistacchio</h3><div class=\"ds-sub\"><span class=\"ds-it\">Pistachio</span><span class=\"ds-cat\">NUT</span></div></div><svg class=\"ds-chev\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"6 9 12 15 18 9\"/></svg></div>",
+      "css": ".ds-card{display:flex;align-items:center;gap:13px;background:oklch(0.997 0.004 80);border:1px solid oklch(0.908 0.013 74);border-radius:16px;padding:15px 16px;box-shadow:0 1px 2px oklch(0.30 0.02 55 / 0.045),0 4px 18px oklch(0.30 0.02 55 / 0.055);}.ds-mono{width:42px;height:42px;border-radius:12px;background:oklch(0.951 0.030 64);color:oklch(0.500 0.118 46);font:500 19px/1 Fraunces,Georgia,serif;display:flex;align-items:center;justify-content:center;flex-shrink:0;}.ds-card-t{flex:1;min-width:0;}.ds-card-t h3{margin:0;font:500 17px/1.2 Fraunces,Georgia,serif;letter-spacing:-0.01em;color:oklch(0.255 0.022 54);}.ds-sub{display:flex;align-items:baseline;gap:8px;margin-top:4px;}.ds-it{font:italic 13px/1 -apple-system,system-ui,sans-serif;color:oklch(0.548 0.026 56);}.ds-cat{font:600 10px/1 -apple-system,system-ui,sans-serif;letter-spacing:0.1em;color:oklch(0.548 0.026 56);}.ds-chev{width:18px;height:18px;color:oklch(0.548 0.026 56);align-self:flex-start;margin-top:4px;flex-shrink:0;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Quiet Gelateria",
+    "overview": "The interface behaves like a good gelato counter: warm, unhurried, and confident enough to let the product speak. It is read at arm's length, on a phone propped on the kitchen counter, by someone whose hands are busy. So the work is to recede. Cream surfaces and a single terracotta accent carry the whole system; the recipes are the content and the chrome stays out of the way. It is a tool first, but also a thing the owner is proud of, so the craft shows in precision rather than ornament.",
+    "keyCharacteristics": [
+      "Warm-neutral cream surfaces, never cold white, never pure black",
+      "One terracotta accent, reserved for action, selection, and state",
+      "A single optical serif (Fraunces) for names only; system sans for everything else",
+      "Glanceable at arm's length: large body text, tabular figures, generous tap targets",
+      "Precision over decoration; flat by default, motion only to convey state"
+    ],
+    "rules": [
+      { "name": "The One Accent Rule", "body": "Terracotta is the only chromatic voice. It appears on action, selection, and state, nothing else.", "section": "colors" },
+      { "name": "The No-Pastel-Soup Rule", "body": "Categories are distinguished by their word, not their hue. Every category label is the same muted ink.", "section": "colors" },
+      { "name": "The Serif-For-Names-Only Rule", "body": "Fraunces touches the wordmark and recipe names and nothing else.", "section": "typography" },
+      { "name": "The Tabular-Figure Rule", "body": "Every quantity uses tabular-nums so amounts and batch sizes align in a scannable column.", "section": "typography" },
+      { "name": "The Tinted-Shadow Rule", "body": "Shadows are warm (hue 55), never rgba(0,0,0,...).", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep terracotta to action, selection, and state; let the cream and ink carry the surface.",
+      "Do set every quantity and batch size in tabular figures so columns align.",
+      "Do size body and step text for arm's-length reading (15px floor) with generous tap targets.",
+      "Do convey category by its word in one muted label color.",
+      "Do keep surfaces flat, using warm tinted shadows and hairlines for the little depth there is.",
+      "Do gate all motion behind prefers-reduced-motion and keep transitions 150-240ms ease-out."
+    ],
+    "donts": [
+      "Don't use emoji as decoration where it competes with content; use inline stroke SVGs or a typographic monogram.",
+      "Don't introduce multi-stop gradients on headers, cards, or modals.",
+      "Don't bring back the five competing pastel category badges.",
+      "Don't use a border-left greater than 1px as a colored accent stripe; use a full-radius tinted block with a leading label.",
+      "Don't use #fff, #000, or rgba(0,0,0,...); every neutral is tinted warm in OKLCH.",
+      "Don't let it drift toward a generic SaaS dashboard or toward recipe-blog spam.",
+      "Don't set Fraunces on buttons, labels, or data, names only."
+    ]
+  }
+}

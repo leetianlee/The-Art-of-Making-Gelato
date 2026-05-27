@@ -4,110 +4,142 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Gelato">
-<meta name="theme-color" content="#b8622e">
+<meta name="theme-color" content="#f5efe4">
 <link rel="apple-touch-icon" href="data:image/png;base64,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">
 <title>The Art of Making Gelato</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #fdf8f3;
-    --warm: #f7efe4;
-    --accent: #b8622e;
-    --accent-dark: #8f4a1e;
-    --accent-light: #d4845a;
-    --accent-pale: #fbecd9;
-    --dark: #231806;
-    --mid: #7a5838;
-    --light-text: #9e7a52;
-    --border: #e8d8c4;
-    --green: #4a8a5a;
-    --shadow: 0 2px 14px rgba(35,24,6,0.09);
-    --shadow-lg: 0 6px 28px rgba(35,24,6,0.14);
-    --radius: 14px;
+    /* Warm-neutral surfaces — OKLCH, every neutral tinted toward terracotta */
+    --cream: oklch(0.984 0.008 74);        /* page background */
+    --surface: oklch(0.997 0.004 80);      /* cards, inputs */
+    --warm: oklch(0.962 0.011 73);         /* quiet recessed fills */
+    --border: oklch(0.908 0.013 74);       /* hairline */
+    --line-2: oklch(0.855 0.018 72);       /* stronger divider */
+    /* Ink */
+    --dark: oklch(0.255 0.022 54);         /* primary text */
+    --mid: oklch(0.440 0.028 52);          /* secondary text */
+    --light-text: oklch(0.548 0.026 56);   /* muted labels */
+    /* Single terracotta accent — actions, selection, state only */
+    --accent: oklch(0.585 0.118 48);
+    --accent-dark: oklch(0.515 0.122 46);
+    --accent-light: oklch(0.700 0.090 50);
+    --accent-ink: oklch(0.500 0.118 46);   /* accent as text (AA on light) */
+    --accent-pale: oklch(0.951 0.030 64);  /* accent tint fill */
+    --accent-line: oklch(0.882 0.045 58);  /* accent tint border */
+    --on-accent: oklch(0.993 0.004 80);    /* text on accent fills */
+    /* Semantic — used sparingly */
+    --green: oklch(0.515 0.090 152);       /* success / copied */
+    --green-weak: oklch(0.955 0.035 150);
+    --qa-ink: oklch(0.498 0.072 70);       /* QA correction note */
+    --qa-weak: oklch(0.962 0.038 82);
+    --shadow: 0 1px 2px oklch(0.30 0.02 55 / 0.045), 0 4px 18px oklch(0.30 0.02 55 / 0.055);
+    --shadow-lg: 0 10px 44px oklch(0.28 0.02 55 / 0.16);
+    --radius: 16px;
+    --radius-sm: 11px;
+    --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: var(--font-sans);
     background: var(--cream);
     color: var(--dark);
     min-height: 100vh;
-    padding-bottom: 80px;
+    padding-bottom: 64px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: var(--accent-pale); }
+  :focus-visible {
+    outline: 2.5px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 
   /* ── HEADER ── */
   header {
-    background: linear-gradient(160deg, #c46e36 0%, #a85428 100%);
-    color: white;
-    padding: 14px 16px 12px;
+    background: color-mix(in oklab, var(--cream) 88%, transparent);
+    -webkit-backdrop-filter: saturate(1.4) blur(12px);
+    backdrop-filter: saturate(1.4) blur(12px);
+    color: var(--dark);
+    padding: 13px 18px;
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    border-bottom: 1px solid var(--border);
   }
   .header-top {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 11px;
   }
   .header-logo {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     flex-shrink: 0;
-    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.25));
   }
+  .header-text { min-width: 0; }
   .header-text h1 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    line-height: 1.2;
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    color: var(--dark);
   }
   .header-text p {
-    font-size: 10.5px;
-    opacity: 0.78;
-    margin-top: 1px;
-    letter-spacing: 0.5px;
+    font-size: 10px;
+    color: var(--light-text);
+    margin-top: 3px;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
+    font-weight: 600;
   }
 
-  /* Size Toggle */
+  /* Size Toggle — quiet segmented control */
   .size-toggle {
     display: flex;
-    background: rgba(255,255,255,0.18);
+    background: var(--warm);
+    border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 3px;
+    padding: 2px;
     margin-left: auto;
+    flex-shrink: 0;
   }
   .size-toggle button {
     border: none;
     background: transparent;
-    padding: 5px 13px;
-    border-radius: 7px;
+    padding: 6px 12px;
+    border-radius: 8px;
     font-size: 12.5px;
     font-weight: 600;
+    font-variant-numeric: tabular-nums;
     cursor: pointer;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
-    transition: all 0.2s;
-    color: rgba(255,255,255,0.85);
+    transition: color 0.18s ease, background 0.18s ease;
+    color: var(--light-text);
   }
   .size-toggle button.active {
-    background: rgba(255,255,255,0.95);
-    color: var(--accent);
+    background: var(--surface);
+    color: var(--accent-ink);
+    box-shadow: var(--shadow);
   }
 
   /* ── SEARCH ── */
   .search-bar {
-    padding: 10px 14px;
-    background: var(--warm);
-    border-bottom: 1px solid var(--border);
+    padding: 12px 16px 10px;
+    background: var(--cream);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
   .search-wrap {
     position: relative;
@@ -115,38 +147,44 @@
   }
   .search-icon {
     position: absolute;
-    left: 11px;
+    left: 13px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 14px;
-    opacity: 0.45;
+    width: 16px;
+    height: 16px;
+    color: var(--light-text);
     pointer-events: none;
+    display: flex;
   }
+  .search-icon svg { width: 100%; height: 100%; }
   .search-bar input {
     width: 100%;
-    padding: 9px 32px 9px 33px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    font-size: 15px;
-    background: white;
+    padding: 11px 36px 11px 38px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 16px;
+    background: var(--surface);
     outline: none;
     color: var(--dark);
-    transition: border-color 0.2s;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
   }
-  .search-bar input:focus { border-color: var(--accent-light); }
+  .search-bar input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-pale);
+  }
   .search-bar input::placeholder { color: var(--light-text); }
   .search-clear {
     position: absolute;
-    right: 9px;
+    right: 8px;
     top: 50%;
     transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    background: var(--light-text);
-    color: white;
-    font-size: 11px;
-    font-weight: 700;
+    background: var(--warm);
+    color: var(--mid);
+    font-size: 12px;
+    font-weight: 600;
     border: none;
     cursor: pointer;
     display: none;
@@ -158,11 +196,12 @@
   }
   .search-clear.visible { display: flex; }
   .recipe-count {
-    font-size: 11.5px;
+    font-size: 12px;
     color: var(--light-text);
     white-space: nowrap;
     font-weight: 600;
-    min-width: 48px;
+    font-variant-numeric: tabular-nums;
+    min-width: 44px;
     text-align: right;
   }
 
@@ -170,128 +209,137 @@
   .categories {
     display: flex;
     overflow-x: auto;
-    padding: 9px 12px;
-    gap: 7px;
-    background: var(--warm);
-    border-bottom: 1px solid var(--border);
+    padding: 6px 16px 14px;
+    gap: 8px;
+    background: var(--cream);
     scrollbar-width: none;
   }
   .categories::-webkit-scrollbar { display: none; }
   .cat-btn {
-    border: 1.5px solid var(--border);
-    background: white;
-    padding: 5px 13px;
-    border-radius: 20px;
-    font-size: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 8px 15px;
+    border-radius: 999px;
+    font-size: 13px;
     font-weight: 600;
     white-space: nowrap;
     cursor: pointer;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     color: var(--mid);
-    transition: all 0.18s;
+    transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease;
   }
+  .cat-btn:active { background: var(--warm); }
   .cat-btn.active {
     background: var(--accent);
     border-color: var(--accent);
-    color: white;
-    box-shadow: 0 2px 8px rgba(184,98,46,0.35);
+    color: var(--on-accent);
   }
 
   /* ── RECIPE LIST ── */
   .recipe-list {
-    padding: 10px 12px;
+    padding: 4px 16px 16px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
   }
 
   /* ── RECIPE CARD ── */
   .recipe-card {
-    background: white;
+    background: var(--surface);
     border-radius: var(--radius);
-    border: 1.5px solid var(--border);
+    border: 1px solid var(--border);
     overflow: hidden;
     box-shadow: var(--shadow);
-    transition: box-shadow 0.2s, transform 0.15s;
+    transition: border-color 0.18s ease;
   }
-  .recipe-card:active { transform: scale(0.995); box-shadow: none; }
+  .recipe-card.open { border-color: var(--line-2); }
   .recipe-header {
     display: flex;
     align-items: center;
-    padding: 13px 14px;
+    padding: 15px 16px;
     cursor: pointer;
     touch-action: manipulation;
-    -webkit-tap-highlight-color: rgba(0,0,0,0.03);
-    gap: 11px;
+    -webkit-tap-highlight-color: transparent;
+    gap: 13px;
     user-select: none;
   }
-  .recipe-icon {
-    font-size: 24px;
-    width: 44px;
-    height: 44px;
-    border-radius: 11px;
-    background: var(--warm);
+  .recipe-mono {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-size: 19px;
+    color: var(--accent-ink);
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--accent-pale);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    line-height: 1;
   }
   .recipe-title { flex: 1; min-width: 0; }
   .recipe-title h3 {
-    font-size: 14.5px;
-    font-weight: 700;
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
     color: var(--dark);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
   .recipe-title .sub-row {
     display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 3px;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 4px;
     flex-wrap: wrap;
   }
-  .recipe-title .italian { font-size: 11.5px; color: var(--light-text); }
-  .recipe-chevron {
-    color: var(--light-text);
+  .recipe-title .italian {
     font-size: 13px;
-    transition: transform 0.28s cubic-bezier(.4,0,.2,1);
-    flex-shrink: 0;
-    opacity: 0.7;
+    font-style: italic;
+    color: var(--light-text);
   }
-  .recipe-card.open .recipe-chevron { transform: rotate(180deg); opacity: 1; }
+  .recipe-chevron {
+    width: 18px;
+    height: 18px;
+    color: var(--light-text);
+    transition: transform 0.22s cubic-bezier(.22,1,.36,1);
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+  .recipe-chevron svg { width: 100%; height: 100%; }
+  .recipe-card.open .recipe-chevron { transform: rotate(180deg); color: var(--mid); }
 
-  /* Category Badge */
+  /* Category label — one quiet treatment for every category */
   .cat-badge {
-    font-size: 9.5px;
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--light-text);
     text-transform: uppercase;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.08em;
     display: inline-block;
   }
-  .badge-basics { background: #e3f2ee; color: #1e7a5e; }
-  .badge-traditional { background: #e8edfd; color: #3558c4; }
-  .badge-nuts { background: #fef2e0; color: #a85818; }
-  .badge-nontraditional { background: #e8f6e8; color: #2e7d42; }
-  .badge-sorbet { background: #f3e4f8; color: #7830a8; }
   .qa-badge {
     font-size: 9.5px;
-    background: #fff3cd;
-    color: #8a6400;
-    border: 1px solid #ffe08a;
-    padding: 2px 5px;
-    border-radius: 4px;
+    font-weight: 600;
+    color: var(--qa-ink);
+    background: var(--qa-weak);
+    border: 1px solid color-mix(in oklab, var(--qa-ink) 26%, transparent);
+    padding: 1px 6px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+    vertical-align: 1px;
   }
 
   /* ── ACCORDION ANIMATION ── */
   .recipe-body {
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows 0.3s cubic-bezier(.4,0,.2,1);
+    transition: grid-template-rows 0.24s cubic-bezier(.22,1,.36,1);
     border-top: 0px solid var(--border);
   }
   .recipe-card.open .recipe-body {
@@ -300,36 +348,36 @@
   }
   .recipe-body-inner {
     overflow: hidden;
-    padding: 0 14px;
-    transition: padding 0.3s cubic-bezier(.4,0,.2,1);
+    padding: 0 16px;
   }
   .recipe-card.open .recipe-body-inner {
-    padding: 0 14px 14px;
+    padding: 2px 16px 18px;
   }
 
   /* Section titles */
   .section-title {
-    font-size: 10.5px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.1em;
     color: var(--light-text);
-    margin: 14px 0 7px;
+    margin: 18px 0 8px;
   }
 
   /* Ingredients Table */
   .ing-table { width: 100%; border-collapse: collapse; }
   .ing-table tr:not(:last-child) td { border-bottom: 1px solid var(--border); }
   .ing-table td {
-    padding: 7px 0;
-    font-size: 13.5px;
+    padding: 9px 0;
+    font-size: 15px;
     vertical-align: top;
-    line-height: 1.4;
+    line-height: 1.45;
   }
-  .ing-table td:first-child { color: var(--dark); padding-right: 10px; width: 55%; }
+  .ing-table td:first-child { color: var(--mid); padding-right: 14px; width: 56%; }
   .ing-table td:last-child {
-    color: var(--accent);
-    font-weight: 700;
+    color: var(--accent-ink);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
     text-align: right;
     white-space: nowrap;
   }
@@ -343,26 +391,27 @@
   .copy-btn {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-top: 10px;
-    padding: 8px 12px;
-    background: var(--accent-pale);
-    border: 1.5px solid #e8c4a8;
-    border-radius: 8px;
-    font-size: 12px;
+    gap: 7px;
+    margin-top: 12px;
+    padding: 10px 15px;
+    background: var(--surface);
+    border: 1px solid var(--accent-line);
+    border-radius: 10px;
+    font-size: 13px;
     font-weight: 600;
-    color: var(--accent);
+    color: var(--accent-ink);
     cursor: pointer;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     width: fit-content;
-    transition: background 0.2s;
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
   }
-  .copy-btn:active { background: #f0d0b8; }
+  .copy-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+  .copy-btn:active { background: var(--accent-pale); }
   .copy-btn.copied {
-    background: #e8f5e8;
-    border-color: #a8d8a8;
-    color: #2e7d42;
+    background: var(--green-weak);
+    border-color: color-mix(in oklab, var(--green) 38%, transparent);
+    color: var(--green);
   }
 
   /* Steps */
@@ -370,147 +419,221 @@
   .steps-list li {
     counter-increment: steps;
     display: flex;
-    gap: 10px;
-    font-size: 13px;
+    gap: 12px;
+    font-size: 15px;
     line-height: 1.55;
-    padding: 7px 0;
+    padding: 10px 0;
     border-bottom: 1px solid var(--border);
     color: var(--dark);
   }
   .steps-list li:last-child { border-bottom: none; }
   .steps-list li::before {
     content: counter(steps);
-    min-width: 22px;
-    height: 22px;
+    min-width: 24px;
+    height: 24px;
     border-radius: 50%;
-    background: var(--accent);
-    color: white;
-    font-size: 11px;
-    font-weight: 700;
+    background: var(--accent-pale);
+    color: var(--accent-ink);
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    margin-top: 2px;
+    margin-top: 1px;
   }
 
   /* Tips */
   .tip-box {
     background: var(--warm);
-    border-left: 3px solid var(--accent-light);
-    border-radius: 0 8px 8px 0;
-    padding: 9px 12px;
-    margin-top: 10px;
-    font-size: 12.5px;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-top: 12px;
+    font-size: 13.5px;
     color: var(--mid);
     line-height: 1.5;
   }
+  .tip-box .label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--light-text);
+    margin-bottom: 4px;
+  }
   .qa-note {
-    background: #fffbe6;
-    border-left: 3px solid #f0c040;
-    border-radius: 0 8px 8px 0;
-    padding: 8px 12px;
-    margin-top: 8px;
-    font-size: 12px;
-    color: #7a5c00;
+    background: var(--qa-weak);
+    border: 1px solid color-mix(in oklab, var(--qa-ink) 18%, transparent);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--qa-ink);
     line-height: 1.5;
   }
+  .qa-note strong { font-weight: 600; }
 
   /* Serve time */
   .serve-info {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-top: 12px;
-    padding: 8px 12px;
+    gap: 9px;
+    margin-top: 14px;
+    padding: 11px 14px;
     background: var(--warm);
-    border-radius: 8px;
-    font-size: 12px;
+    border-radius: 12px;
+    font-size: 13px;
     color: var(--mid);
+    line-height: 1.45;
   }
+  .serve-info svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--light-text); }
+  .serve-info strong { font-weight: 600; color: var(--dark); }
 
   /* No results */
   .no-results {
     text-align: center;
-    padding: 48px 20px;
+    padding: 64px 24px;
     color: var(--light-text);
   }
-  .no-results .emoji { font-size: 44px; margin-bottom: 14px; }
-  .no-results p { font-size: 14px; font-weight: 600; }
-  .no-results small { font-size: 12px; opacity: 0.7; }
+  .no-results .mark {
+    width: 30px; height: 30px;
+    margin: 0 auto 14px;
+    color: var(--line-2);
+  }
+  .no-results .mark svg { width: 100%; height: 100%; }
+  .no-results p { font-size: 15px; font-weight: 600; color: var(--mid); }
+  .no-results small { font-size: 13px; margin-top: 4px; display: block; }
 
-  /* Guide card */
+  /* Guide card — quiet, not a loud gradient */
   .guide-card {
-    margin: 0 12px 8px;
-    background: linear-gradient(135deg, #c46e36, #9a4c22);
+    margin: 0 16px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 13px 16px;
+    padding: 14px 16px;
     cursor: pointer;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     display: flex;
     align-items: center;
-    gap: 12px;
-    box-shadow: 0 3px 14px rgba(184,98,46,0.3);
+    gap: 13px;
+    box-shadow: var(--shadow);
+    transition: border-color 0.18s ease;
   }
-  .guide-card .guide-icon { font-size: 26px; }
-  .guide-card .guide-text h3 { color: white; font-size: 13.5px; font-weight: 700; }
-  .guide-card .guide-text p { color: rgba(255,255,255,0.75); font-size: 11.5px; margin-top: 2px; }
-  .guide-card .guide-arrow { color: rgba(255,255,255,0.65); margin-left: auto; font-size: 16px; }
+  .guide-card:active { border-color: var(--line-2); }
+  .guide-card .guide-icon {
+    width: 38px; height: 38px;
+    border-radius: 11px;
+    background: var(--accent-pale);
+    color: var(--accent-ink);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .guide-card .guide-icon svg { width: 19px; height: 19px; }
+  .guide-card .guide-text { flex: 1; min-width: 0; }
+  .guide-card .guide-text h3 {
+    color: var(--dark);
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    letter-spacing: -0.005em;
+  }
+  .guide-card .guide-text p { color: var(--light-text); font-size: 12.5px; margin-top: 2px; }
+  .guide-card .guide-arrow { color: var(--light-text); margin-left: auto; width: 18px; height: 18px; flex-shrink: 0; }
+  .guide-card .guide-arrow svg { width: 100%; height: 100%; }
 
   /* Guide modal */
   .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.55);
+    background: oklch(0.28 0.02 55 / 0.42);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
     z-index: 200;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
   .modal-overlay.open { display: block; }
   .modal {
-    background: white;
-    margin: 20px 12px 40px;
-    border-radius: 18px;
+    background: var(--surface);
+    margin: 24px 14px 44px;
+    border-radius: 20px;
     overflow: hidden;
     box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
   }
   .modal-header {
-    background: linear-gradient(135deg, #c46e36, #9a4c22);
-    padding: 15px 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 17px 18px;
     display: flex;
     align-items: center;
     gap: 10px;
+    position: sticky;
+    top: 0;
   }
-  .modal-header h2 { color: white; font-size: 15px; flex: 1; font-family: 'Playfair Display', serif; }
+  .modal-header h2 {
+    color: var(--dark);
+    font-size: 18px;
+    font-weight: 500;
+    flex: 1;
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    letter-spacing: -0.01em;
+  }
   .modal-close {
-    width: 30px; height: 30px;
+    width: 32px; height: 32px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.22);
-    border: none; color: white; font-size: 16px;
+    background: var(--warm);
+    border: none; color: var(--mid); font-size: 16px;
     cursor: pointer;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
   }
-  .modal-body { padding: 14px 16px; }
+  .modal-body { padding: 16px 18px 22px; }
   .guide-step {
-    display: flex; gap: 12px;
-    padding: 10px 0;
+    display: flex; gap: 13px;
+    padding: 12px 0;
     border-bottom: 1px solid var(--border);
-    font-size: 13px;
+    font-size: 14.5px;
     line-height: 1.55;
+    color: var(--dark);
   }
   .guide-step:last-child { border-bottom: none; }
   .guide-step-num {
-    min-width: 28px; height: 28px;
+    min-width: 26px; height: 26px;
     border-radius: 50%;
-    background: var(--accent); color: white;
-    font-size: 12px; font-weight: 700;
+    background: var(--accent-pale); color: var(--accent-ink);
+    font-size: 12px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
     display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    margin-top: 1px;
   }
-  .guide-step-text strong { display: block; color: var(--accent); margin-bottom: 2px; font-size: 12.5px; }
+  .guide-step-text strong { display: block; color: var(--dark); margin-bottom: 3px; font-size: 13px; font-weight: 600; }
+  .modal-note {
+    background: var(--warm);
+    border-radius: 12px;
+    padding: 13px 14px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.5;
+  }
+  .modal-note strong { color: var(--dark); font-weight: 600; }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.001ms !important;
+      animation-duration: 0.001ms !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -549,36 +672,34 @@
 
 <div class="search-bar">
   <div class="search-wrap">
-    <span class="search-icon">🔍</span>
-    <input type="search" id="searchInput" placeholder="Search flavours…" oninput="onSearch()" autocomplete="off" autocorrect="off" spellcheck="false">
-    <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+    <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+    <input type="search" id="searchInput" placeholder="Search flavours…" oninput="onSearch()" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Search recipes">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()" aria-label="Clear search">✕</button>
   </div>
   <span class="recipe-count" id="recipeCount">52</span>
 </div>
 
 <div class="categories" id="catBar">
   <button class="cat-btn active" onclick="setCategory('all', this)">All</button>
-  <button class="cat-btn" onclick="setCategory('basics', this)">🏛 Basics</button>
-  <button class="cat-btn" onclick="setCategory('traditional', this)">🍦 Classics</button>
-  <button class="cat-btn" onclick="setCategory('nuts', this)">🥜 Nuts</button>
-  <button class="cat-btn" onclick="setCategory('nontraditional', this)">✨ Creative</button>
-  <button class="cat-btn" onclick="setCategory('sorbet', this)">🧊 Sorbets</button>
+  <button class="cat-btn" onclick="setCategory('basics', this)">Basics</button>
+  <button class="cat-btn" onclick="setCategory('traditional', this)">Classics</button>
+  <button class="cat-btn" onclick="setCategory('nuts', this)">Nuts</button>
+  <button class="cat-btn" onclick="setCategory('nontraditional', this)">Creative</button>
+  <button class="cat-btn" onclick="setCategory('sorbet', this)">Sorbets</button>
 </div>
 
-<div style="height:8px"></div>
-
 <div class="guide-card" id="guideCard" onclick="toggleGuide()">
-  <div class="guide-icon">📖</div>
+  <div class="guide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C10.4 5.1 7.8 4.6 4 5V18c3.8-.4 6.4.1 8 1.5"/><path d="M12 6.6C13.6 5.1 16.2 4.6 20 5V18c-3.8-.4-6.4.1-8 1.5"/></svg></div>
   <div class="guide-text">
     <h3>Step-by-Step Gelato Guide</h3>
-    <p>Equipment · ingredients · full technique</p>
+    <p>Equipment, ingredients, full technique</p>
   </div>
-  <div class="guide-arrow">›</div>
+  <div class="guide-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></div>
 </div>
 
 <div class="recipe-list" id="recipeList"></div>
 <div class="no-results" id="noResults" style="display:none">
-  <div class="emoji">🍦</div>
+  <div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9a5 5 0 0 1 10 0"/><path d="M6.5 9h11l-5 10.6a.5.5 0 0 1-1 0z"/></svg></div>
   <p>No flavours found</p>
   <small>Try a different search or category</small>
 </div>
@@ -590,8 +711,8 @@
       <button class="modal-close" onclick="toggleGuide()">✕</button>
     </div>
     <div class="modal-body">
-      <div style="background:var(--warm);border-radius:10px;padding:12px;margin-bottom:12px;font-size:12.5px;color:var(--mid);line-height:1.5;">
-        <strong style="color:var(--accent);">Key notes:</strong> Measure by weight, not volume. Keep freezer at 2–4°F (−17 to −16°C). Ideal serving temp: 7–12°F (−14 to −11°C).
+      <div class="modal-note">
+        <strong>Key notes:</strong> Measure by weight, not volume. Keep freezer at 2–4°F (−17 to −16°C). Ideal serving temp: 7–12°F (−14 to −11°C).
       </div>
       <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text"><strong>Dry ingredients</strong> Mix milk powder, sugar, and tapioca starch together in a large bowl.</div></div>
       <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text"><strong>Add liquids</strong> Add cream, milk, and any other liquids. Whisk until fully incorporated.</div></div>
@@ -2013,6 +2134,13 @@ const RECIPES = [
 let currentCategory = 'all';
 let currentSearch = '';
 
+const ICON_COPY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+const ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+const ICON_CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+const ICON_CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7.5 12 12 15 14"/></svg>';
+const COPY_BTN_HTML = ICON_COPY + '<span>Copy ingredients</span>';
+const COPIED_BTN_HTML = ICON_CHECK + '<span>Copied</span>';
+
 function setSize(size) {
   if (size === 950) {
     document.body.classList.remove('show-1500');
@@ -2067,28 +2195,30 @@ function copyIngredients(id, btn) {
   const text = `${r.name} (${size})\n\nIngredients:\n${lines.join('\n')}`;
   navigator.clipboard.writeText(text).then(() => {
     btn.classList.add('copied');
-    btn.innerHTML = '✓ Copied!';
+    btn.innerHTML = COPIED_BTN_HTML;
     setTimeout(() => {
       btn.classList.remove('copied');
-      btn.innerHTML = '📋 Copy ingredients';
+      btn.innerHTML = COPY_BTN_HTML;
     }, 2000);
   }).catch(() => {
-    // Fallback for older browsers
-    btn.innerHTML = '✓ Done';
-    setTimeout(() => { btn.innerHTML = '📋 Copy ingredients'; }, 1500);
+    btn.classList.add('copied');
+    btn.innerHTML = COPIED_BTN_HTML;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = COPY_BTN_HTML;
+    }, 1500);
   });
 }
 
 function getCategoryBadge(cat) {
-  const map = {
-    basics:         ['badge-basics',         'Basics'],
-    traditional:    ['badge-traditional',    'Classic'],
-    nuts:           ['badge-nuts',           'Nut'],
-    nontraditional: ['badge-nontraditional', 'Creative'],
-    sorbet:         ['badge-sorbet',         'Sorbet'],
+  const labels = {
+    basics: 'Basics',
+    traditional: 'Classic',
+    nuts: 'Nut',
+    nontraditional: 'Creative',
+    sorbet: 'Sorbet',
   };
-  const [cls, label] = map[cat] || ['', cat];
-  return `<span class="cat-badge ${cls}">${label}</span>`;
+  return `<span class="cat-badge">${labels[cat] || cat}</span>`;
 }
 
 function renderRecipes() {
@@ -2124,7 +2254,7 @@ function renderRecipes() {
   list.innerHTML = filtered.map(r => `
     <div class="recipe-card" id="card-${r.id}">
       <div class="recipe-header" onclick="toggleCard('${r.id}')">
-        <div class="recipe-icon">${r.icon}</div>
+        <div class="recipe-mono" aria-hidden="true">${(r.name.trim()[0] || '·').toUpperCase()}</div>
         <div class="recipe-title">
           <h3>${r.name}${r.qa ? ' <span class="qa-badge">QA</span>' : ''}</h3>
           <div class="sub-row">
@@ -2132,11 +2262,11 @@ function renderRecipes() {
             ${getCategoryBadge(r.category)}
           </div>
         </div>
-        <div class="recipe-chevron">▾</div>
+        <div class="recipe-chevron">${ICON_CHEVRON}</div>
       </div>
       <div class="recipe-body">
         <div class="recipe-body-inner">
-          ${r.qa ? `<div class="qa-note">⚠️ <strong>QA Correction:</strong> ${r.qa}</div>` : ''}
+          ${r.qa ? `<div class="qa-note"><span class="label" style="display:block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;opacity:0.75;margin-bottom:4px;">QA correction</span>${r.qa}</div>` : ''}
 
           <div class="section-title">Ingredients</div>
           <table class="ing-table">
@@ -2151,20 +2281,18 @@ function renderRecipes() {
             `).join('')}
           </table>
 
-          <button class="copy-btn" onclick="copyIngredients('${r.id}', this)">
-            📋 Copy ingredients
-          </button>
+          <button class="copy-btn" onclick="copyIngredients('${r.id}', this)">${COPY_BTN_HTML}</button>
 
           <div class="section-title">Method</div>
           <ol class="steps-list">
             ${r.steps.map(s => `<li><span>${s}</span></li>`).join('')}
           </ol>
 
-          ${r.tips && r.tips.length ? r.tips.map(t => `<div class="tip-box">💡 ${t}</div>`).join('') : ''}
+          ${r.tips && r.tips.length ? r.tips.map(t => `<div class="tip-box"><span class="label">Tip</span>${t}</div>`).join('') : ''}
 
           ${r.softenTime && r.softenTime !== 'N/A — base only' ? `
             <div class="serve-info">
-              ⏱ Soften <strong style="margin-left:3px">${r.softenTime}</strong>&nbsp;before serving (after 2+ days in freezer)
+              ${ICON_CLOCK}<span>Soften <strong>${r.softenTime}</strong> before serving (after 2+ days frozen)</span>
             </div>
           ` : ''}
         </div>
